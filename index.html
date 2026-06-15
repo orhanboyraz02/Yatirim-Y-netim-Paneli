@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Yatırım AI | Çok Kullanıcılı Yapay Zeka Yatırım Platformu</title>
+    <title>Yatırım AI: Yönetim Paneli | Yapay Zeka Destekli Yatırım Platformu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -72,6 +72,8 @@
         { id: 3, name: "BIST 100", symbol: "XU100.IS", price: 10850, change: "-0.3%", rsi: 42, trend: "↓", confidence: 45 },
         { id: 4, name: "S&P 500", symbol: "SPY", price: 5230, change: "+0.5%", rsi: 65, trend: "↑", confidence: 79 },
         { id: 5, name: "BITCOIN", symbol: "BTC-USD", price: 68500, change: "+2.1%", rsi: 71, trend: "↑", confidence: 68 },
+        { id: 5, name: "TAHVİL", symbol: "TL-USD", price: 68500, change: "+2.1%", rsi: 71, trend: "↑", confidence: 68 },
+        { id: 5, name: "NAKİT", symbol: "TL-USD", price: 68500, change: "+2.1%", rsi: 71, trend: "↑", confidence: 68 },
         { id: 6, name: "DOLAR", symbol: "DX-Y.NYB", price: 104.2, change: "-0.2%", rsi: 48, trend: "↓", confidence: 52 }
     ];
     
@@ -103,7 +105,7 @@
     // ============================================================
     function formatMoney(amount) { return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(amount); }
     function showToast(msg) { alert(msg); }
-    function whatsappLink(text) { window.open(`https://wa.me/905418660202?text=${encodeURIComponent(text)}`, '_blank'); }
+    function whatsappLink(text) { window.open(`https://wa.me/905409666602?text=${encodeURIComponent(text)}`, '_blank'); }
     
     function generateSignal(asset) {
         let rsi = asset.rsi || 50;
@@ -308,7 +310,7 @@
     }
     
     function renderAssetsModule() {
-        return `<div class="card p-5"><h3 class="text-gold font-bold mb-3">📈 Varlık Takibi</h3><div class="overflow-x-auto"><table class="w-full"><thead><tr class="border-b border-gray-700"><th class="text-left p-2">Varlık</th><th class="text-left p-2">Fiyat</th><th class="text-left p-2">Değişim</th><th class="text-left p-2">RSI</th><th class="text-left p-2">Trend</th><th class="text-left p-2">Güven</th></tr></thead><tbody>${assets.map(a => `<tr class="border-b border-gray-800"><td class="p-2">${a.name}</td><td class="p-2">$${a.price}</td><td class="p-2 ${a.change.includes('+') ? 'text-emerald-400' : 'text-red-400'}">${a.change}</td><td class="p-2">${a.rsi}</td><td class="p-2">${a.trend}</td><td class="p-2"><div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-gold h-2 rounded-full" style="width: ${a.confidence}%"></div></div></td></tr>`).join('')}</tbody>}?</div>${isAdmin ? `<button onclick="openAdminPanel()" class="mt-4 btn-gold px-4 py-2 rounded-lg w-full">+ Varlık Yönetimi</button>` : ''}</div>`;
+        return `<div class="card p-5"><h3 class="text-gold font-bold mb-3">📈 Varlık Takibi</h3><div class="overflow-x-auto"><table class="w-full"><thead><tr class="border-b border-gray-700"><th class="text-left p-2">Varlık</th><th class="text-left p-2">Fiyat</th><th class="text-left p-2">Değişim</th><th class="text-left p-2">RSI</th><th class="text-left p-2">Trend</th><th class="text-left p-2">Güven</th></table></thead><tbody>${assets.map(a => `<tr class="border-b border-gray-800"><td class="p-2">${a.name}</td><td class="p-2">$${a.price}</td><td class="p-2 ${a.change.includes('+') ? 'text-emerald-400' : 'text-red-400'}">${a.change}</td><td class="p-2">${a.rsi}</td><td class="p-2">${a.trend}</td><td class="p-2"><div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-gold h-2 rounded-full" style="width: ${a.confidence}%"></div></div></td></tr>`).join('')}</tbody>}?</div>${isAdmin ? `<button onclick="openAdminPanel()" class="mt-4 btn-gold px-4 py-2 rounded-lg w-full">+ Varlık Yönetimi</button>` : ''}</div>`;
     }
     
     function renderTechnicalModule() {
@@ -352,7 +354,7 @@
     }
     
     function renderReportsModule() {
-        return `<div class="card p-5"><h3 class="text-gold font-bold mb-3">📑 Raporlar & Geçmiş</h3><div class="flex justify-between items-center mb-4"><button class="btn-gold px-4 py-2 rounded-lg text-sm" onclick="alert('PDF raporu hazırlanıyor...')">📥 PDF Raporu İndir</button><button class="btn-gold px-4 py-2 rounded-lg text-sm" onclick="whatsappLink('Günlük rapor talebi')">📧 WhatsApp ile Gönder</button></div><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b border-gray-700"><th>Tarih</th><th>Varlık</th><th>İşlem</th><th>Sonuç</th></tr></thead><tbody>${pastSignals.map(s => `<tr class="border-b border-gray-800"><td class="p-2">${s.date}<tr><td>${s.asset}</td><td class="${s.signal === 'AL' ? 'text-emerald-400' : (s.signal === 'SAT' ? 'text-red-400' : 'text-yellow-400')}">${s.signal}</td><td>${s.result}</td></tr>`).join('')}</tbody>}?</div></div>`;
+        return `<div class="card p-5"><h3 class="text-gold font-bold mb-3">📑 Raporlar & Geçmiş</h3><div class="flex justify-between items-center mb-4"><button class="btn-gold px-4 py-2 rounded-lg text-sm" onclick="alert('PDF raporu hazırlanıyor...')">📥 PDF Raporu İndir</button><button class="btn-gold px-4 py-2 rounded-lg text-sm" onclick="whatsappLink('Günlük rapor talebi')">📧 WhatsApp ile Gönder</button></div><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b border-gray-700"><th>Tarih</th><th>Varlık</th><th>İşlem</th><th>Sonuç</th></tr></thead><tbody>${pastSignals.map(s => `<tr class="border-b border-gray-800"><td class="p-2">${s.date}</td><td>${s.asset}</td><td class="${s.signal === 'AL' ? 'text-emerald-400' : (s.signal === 'SAT' ? 'text-red-400' : 'text-yellow-400')}">${s.signal}<td><td>${s.result}</td></tr>`).join('')}</tbody>}?</div></div>`;
     }
     
     function renderPricingModule() {
